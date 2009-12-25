@@ -1,2 +1,5 @@
 \.pyc$
 _trial_temp
+^dist/
+^build/
+^Chichimec.egg-info/
