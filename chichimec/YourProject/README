@@ -1,0 +1,18 @@
+============================================================================
+{options[projectDir]}
+============================================================================
+
+You will probably know best what should be in this README file.  All we can
+say with high probability is that this is a web app.
+
+redeploy script
+===============
+
+Your end-users will probably want to know about ``bin/redeploy`` if they grabbed
+the source code for your app, because that's the easiest way to get a clean
+runtime environment they can launch, all batteries included.  Example::
+
+    {options[projectDir]}/bin/redeploy {options[projectDir]}-env
+    source {options[projectDir]}-env/bin/activate
+    twistd -n {options[projectName]}
+

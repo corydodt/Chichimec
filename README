@@ -1,0 +1,129 @@
+==================================
+Chichimec, Twisted Web repackaging
+==================================
+
+Chichimec is a packaging of a Twisted Web-based stack for quickly setting up
+an application environment.  The name comes from the D&D `Epic monster`__,
+which is composed of many wildly flapping wings sticking out in every
+direction, but is also quite fearsome and powerful.
+
+__ http://www.imperiarp.org/reference/abom/beastabom.html#chic
+
+Batteries
+=========
+
+It includes these Python tools:
+
+**Twisted**
+    a Python networking stack
+**zope.interface**
+    (a dependency of Twisted)
+**Nevow**
+    a resource publishing API with Comet/AJAX support
+**Storm**
+    an ORM layer
+**Fudge**
+    a mock object framework, for doing Test-Driven Development
+**Hypy**
+    a search API
+**Genshi**
+    a template system
+**txGenshi**
+    a dependency for using Genshi with Nevow
+**PyFlakes**
+    a tool for statically checking your Python source for common errors
+**Distribute**
+    for making your application easy to package
+**virtualenv**
+    for making your application easy to package
+**chichimec**
+    containing some useful utility code, and scripts for working with your
+    stack such as:
+
+    *boilerplate*
+        for creating the application shell you will need to get started
+
+    *cycle*
+        for restarting your server continuously in development mode
+
+    *redeploy*
+        for packaging your application up when you are ready to distribute it
+
+
+It includes these Javascript tools:
+
+**jQuery**
+    A cross-browser Javascript toolkit that makes it easy to work with the DOM
+    and events
+
+**Nevow JS**
+    Cross-browser Javascript libraries included with Nevow, for using classes,
+    performing Deferred execution (async javascript), and running Comet/AJAX
+    code.
+
+
+Getting Started
+===============
+
+If you have not already done so, install Chichimec with easy_install.  This will
+fetch and install Chichimec itself, Distribute, Twisted, and virtualenv::
+
+    sudo easy_install Chichimec 
+
+Now decide what you want to call your project.  We're going to use "MyProject"
+as the name of this project.  Chichimec comes with a tool called ``boilerplate``
+which uses virtualenv to create your project directory.  Following are some
+different ways to use boilerplate::
+
+    # Print out help.
+    boilerplate --help
+
+    # create a fresh project directory with all libraries, all defaults enabled
+    boilerplate MyProject
+
+    # create a fresh project directory with no Genshi or Storm installed.
+    boilerplate --no-genshi --no-storm MyLeanProject
+
+    # create a fresh project obeying all recommended best practices for
+    # project layout.  This gives you a setup.py, a virtualenv
+    # bootstrap-generator script, a test directory complete with a failing
+    # test, and all dependencies.
+    boilerplate --best-practices MyHardcoreProject
+
+Now you have an application.  You can even run it, by doing::
+
+    cd MyProject
+    ./cycle
+
+This will start up a webserver, running on port 8080.  Visit
+http://localhost:8080/ 
+
+Getting Finished
+================
+
+Once you have an application, you can write code.  
+
+The Root resource is in myproject.resource.  It uses templates found in
+myproject/templates/.
+
+
+Future Directions
+=================
+
+* js.io? for javascript-based networking
+ 
+* Hooks for swapping out the ORM with a different database architecture,
+  Genshi with a different template system, jQuery with a different js library.
+ 
+* Hooks for scalable deployment, including but not limited to:
+
+  - Apache or Nginx
+
+  - a load balancer process
+
+  - multiple appserver processes connecting to a single store
+
+  - multiple appserver processes connecting to a distributed nosql database
+    
+
+.. vim:set ft=rst:
