@@ -3,3 +3,4 @@ _trial_temp
 ^dist/
 ^build/
 ^Chichimec.egg-info/
+^distribute-[^/]*\.tar\.gz$
