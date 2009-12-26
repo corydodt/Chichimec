@@ -19,7 +19,7 @@ setup(name='{options[projectDir]}',
           ],
 
       install_requires=[
-          'Distribute>=0.6.8',
+          'Distribute>=0.6.10',
           'Twisted>=9.0.0',
           'Nevow',
           'Chichimec',

@@ -18,7 +18,7 @@ setup(name='Chichimec',
       scripts=['bin/boilerplate',],
 
       install_requires=[
-          'Distribute>=0.6.8',
+          'Distribute>=0.6.10',
           'twisted>=9.0.0',
           'fudge',
           ],
