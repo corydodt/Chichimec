@@ -11,7 +11,15 @@ class BoilerplateTest(unittest.TestCase):
     """
     Test the operations that write out a project dir
     """
-    def assertFiles(self, *files):
+    def runBoilerplate(self, *args):
+        """
+        Invoke the boilerplate script with our own setup
+        """
+        o = boilerplate.Options()
+        o.parseOptions(*args)
+        return o
+
+    def assertFiles(self, files, messageFn=None):
         """
         Check that each arg filename exists in the current directory.
         """
@@ -19,15 +27,23 @@ class BoilerplateTest(unittest.TestCase):
             if os.path.isdir(f):
                 continue 
             else:
-                self.assertTrue(open(f),
-                        "%s did not exist or was not readable" % (f,))
+                try:
+                    open(f)
+                except EnvironmentError:
+                    if messageFn:
+                        msg = messageFn(f)
+                        self.assertTrue(False, msg)
+                    else:
+                        self.assertTrue(False, "%s could not be opened" % (f,))
 
     def test_newProject(self):
         """
         New projects create a deployment with all the juicy bits
         """
-        boilerplate.run(['boilerplate', 'TestProject_'])
-        self.assertFiles(*['TestProject_/' + x for x in ['bin/activate',
+        o = self.runBoilerplate(['TestProject_'])
+        outp = o['virtualenvOutput']
+        messageFn = lambda x: "%s could not be opened; %s" % (x, outp)
+        self.assertFiles(['TestProject_/' + x for x in ['bin/activate',
             'testproject/__init__.py', 'nevow/plugins/testproject.py',
             'twisted/plugins/testproject.py',
             'testproject/static/testproject.js',
@@ -41,14 +57,14 @@ class BoilerplateTest(unittest.TestCase):
             'lib/pythonx.x/site-packages/Nevow.egg',
             'lib/pythonx.x/site-packages/Distribute.egg',
             'lib/pythonx.x/site-packages/Virtualenv.egg',
-            ]])
+            ]], messageFn)
 
     def test_cherryPick(self):
         """
         You can exclude bits of a deployment with --no-*
         """
         self.assertTrue(False)
-        boilerplate.run(['boilerplate', '--no-genshi', 'TestProject__', ])
+        self.runBoilerplate(['--no-genshi', 'TestProject__', ])
 
     test_cherryPick.todo = "todo"
 
@@ -56,9 +72,11 @@ class BoilerplateTest(unittest.TestCase):
         """
         Test directory &c. are created with --best-practices
         """
-        boilerplate.run(['boilerplate', '--best-practices', 'TestProject___', ])
-        self.assertFiles(*['TestProject___/' + x for x in ['bin/activate',
+        o = self.runBoilerplate(['--best-practices', 'TestProject___', ])
+        outp = o['virtualenvOutput']
+        messageFn = lambda x: "%s could not be opened; %s" % (x, outp)
+        self.assertFiles(['TestProject___/' + x for x in ['bin/activate',
             '.hgignore', 'testproject/test/test_testproject.py',
             'lib/pythonx.x/site-packages/pyflakes.egg',
             'lib/pythonx.x/site-packages/fudge.egg',
-            ]])
+            ]], messageFn)

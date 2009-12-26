@@ -4,6 +4,7 @@ Create the boilerplate for a new Chichimec-based web application
 import sys
 import os
 from inspect import cleandoc
+import subprocess
 
 from twisted.python import usage
 
@@ -75,7 +76,15 @@ class Options(usage.Options):
         bsFile = '%s/bootstrap.py' % (self['projectDir'],)
         open(bsFile, 'w').write(bs)
         os.chmod(bsFile, 0o755)
-        os.system('%s %s' % (bsFile, self['projectDir']))
+
+        proc = subprocess.Popen([bsFile, self['projectDir']],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                )
+        stdout = proc.communicate()[0]
+        assert proc.returncode == 0, stdout
+        self['virtualenvOutput'] = '\n'.join(['> ' + x for x in
+            stdout.splitlines()])
 
 
 def run(argv=None):
