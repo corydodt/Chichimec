@@ -24,21 +24,20 @@ def index2Tuples(s):
 
 EASY_INSTALLABLE = index2Tuples("""
     genshi      Genshi
-    storm       Storm
-    fudge       Fudge
+    storm       storm
+    fudge       fudge
     hypy        Hypy
-    pyflakes    PyFlakes
+    pyflakes    pyflakes
     txgenshi    txGenshi
     twisted     Twisted
-    nevow       Nevow
-    pyflakes    PyFlakes
+    nevow       Nevow 
     """)
 
 MISC_PACKAGES = index2Tuples("""
     jquery      jQuery
     """)
 
-EXCLUDEABLE_PACKAGES = 'genshi storm fudge hypy pyflakes jquery'.split()
+EXCLUDEABLE_PACKAGES = 'fudge genshi storm fudge hypy pyflakes jquery'.split()
 
 
 class Options(usage.Options):
@@ -69,7 +68,7 @@ class Options(usage.Options):
         ps = []
         # figure out what scripts we're including
         for k in EASY_INSTALLABLE:
-            ps.append("'%s'," % (k,))
+            ps.append("'%s'," % (EASY_INSTALLABLE[k],))
         self['optionalScripts'] = '\n'.join(ps)
 
         bs = genBootstrap(self)

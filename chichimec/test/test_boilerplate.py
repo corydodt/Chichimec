@@ -16,6 +16,7 @@ class BoilerplateTest(unittest.TestCase):
         Invoke the boilerplate script with our own setup
         """
         o = boilerplate.Options()
+        o['develop'] = True
         o.parseOptions(*args)
         return o
 

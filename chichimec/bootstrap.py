@@ -1,6 +1,7 @@
 """
 Tool for building bootstrap scripts for applications.
 """
+import os
 from string import Template
 from inspect import cleandoc
 
@@ -24,15 +25,19 @@ def genBootstrap(options):
     """
     setup = genSetup(options).encode('string-escape')
 
-    dev = '"-HNone -f{devDir}",'.format(devDir=RESOURCE('dist')) if options['develop'] else ''
+    devDir = os.path.abspath(RESOURCE('../dist'))
+    dev = '"-HNone", "-f{devDir}",'.format(devDir=devDir) if options['develop'] else ''
 
     tpl = cleandoc("""
         import os, subprocess
         setupCode = "{genSetup}"
         open('{options[projectDir]}/setup.py', 'w').write(setupCode)
         def after_install(options, home_dir):
-            subprocess.call([join(home_dir, 'bin', 'easy_install'), 
-            {developmentMode} '{options[projectDir]}'])
+            args = [join(home_dir, 'bin', 'easy_install'), {developmentMode} '{options[projectDir]}', {options[optionalScripts]}]
+            subprocess.call(args)
+        def adjust_options(options, args):
+            options.distribute = True
+            setattr(options, 'no-site-packages', True)
         """).format(options=options, genSetup=setup,
                 developmentMode=dev)
 
