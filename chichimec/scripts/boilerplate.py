@@ -9,7 +9,7 @@ import subprocess
 from twisted.python import usage
 
 from chichimec.util import nameFix
-from chichimec.bootstrap import genBootstrap
+from chichimec.bootstrap import genBootstrap, genPython
 
 def index2Tuples(s):
     """
@@ -63,6 +63,16 @@ class Options(usage.Options):
 
     def postOptions(self):
         os.mkdir(self['projectDir'])
+
+        # write python files
+        pys = genPython(self)
+        for fn in pys:
+            try:
+                os.makedirs(os.path.dirname(fn))
+            except OSError, e:
+                if e.errno != 17:
+                    raise
+            open(fn, 'w').write(pys[fn])
 
         ps = []
         # figure out what scripts we're including

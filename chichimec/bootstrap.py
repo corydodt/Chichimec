@@ -49,5 +49,36 @@ def genREADME(options):
     """
     Get the README file as a string
     """
-    input = open(YOURPROJECT('README')).read()
-    return input.format(options)
+    return formatFile(YOURPROJECT('README'), options)
+
+
+def formatFile(file, options, **kw):
+    """
+    Open and read file and emit a string of its contents, formatted using
+    options as an argument, and other kw as specified
+    """
+    input = open(file).read()
+    return input.format(options=options, **kw)
+
+
+def genPython(options):
+    """
+    Get all the python modules to be generated as a dictionary of strings
+    """
+    r = {}
+    r['{options[projectDir]}/{options[projectName]}/__init__.py'] = formatFile(
+            YOURPROJECT('yourproject/__init__.py'), options)
+    r['{options[projectDir]}/{options[projectName]}/test/__init__.py'] = formatFile(
+            YOURPROJECT('yourproject/test/__init__.py'), options)
+    r['{options[projectDir]}/twisted/plugins/__init__.py'] = formatFile(
+            YOURPROJECT('twisted/plugins/__init__.py'), options)
+    r['{options[projectDir]}/twisted/plugins/{options[projectName]}.py'] = formatFile(
+            YOURPROJECT('twisted/plugins/yourproject.py'), options)
+    r['{options[projectDir]}/nevow/plugins/__init__.py'] = formatFile(
+            YOURPROJECT('nevow/plugins/__init__.py'), options)
+    r['{options[projectDir]}/nevow/plugins/{options[projectName]}.py'] = formatFile(
+            YOURPROJECT('nevow/plugins/yourproject.py'), options)
+    r2 = {}
+    for k in r:
+        r2[k.format(options=options)] = r[k]
+    return r2
