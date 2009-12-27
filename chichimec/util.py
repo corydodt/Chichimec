@@ -2,7 +2,12 @@ import string
 
 from twisted.python.util import sibpath
 
-RESOURCE = lambda filename: sibpath(__file__, filename)
+def _resourceDefs():
+    global RGEN, RESOURCE
+    RGEN = lambda s: lambda filename: sibpath(s, filename)
+    RESOURCE = RGEN(__file__)
+
+_resourceDefs()
 
 def nameFix(s):
     """

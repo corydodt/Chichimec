@@ -18,6 +18,7 @@ class UtilTest(unittest.TestCase):
         try:
             oldfile = chiutil.__file__
             chiutil.__file__ = '/foo/util.py'
+            chiutil._resourceDefs()
             self.assertEqual(chiutil.RESOURCE('__init__.py'), '/foo/__init__.py')
             self.assertEqual(chiutil.RESOURCE(''), '/foo/')
         finally:
