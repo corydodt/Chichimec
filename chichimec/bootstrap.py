@@ -44,6 +44,7 @@ def genBootstrap(options):
     output = virtualenv.create_bootstrap_script(tpl)
     return output
 
+
 def genREADME(options):
     """
     Get the README file as a string

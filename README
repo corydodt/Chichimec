@@ -24,8 +24,6 @@ It includes these Python tools:
     an ORM layer
 **Fudge**
     a mock object framework, for doing Test-Driven Development
-**Hypy**
-    a search API
 **Genshi**
     a template system
 **txGenshi**

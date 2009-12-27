@@ -49,11 +49,10 @@ class BoilerplateTest(unittest.TestCase):
             'twisted/plugins/testproject.py',
             'testproject/static/testproject.js',
             'testproject/static/jquery-1.3.2.js',
-            'testproject/templates/'
+            'testproject/templates/',
             'lib/pythonx.x/site-packages/Chichimec.egg',
             'lib/pythonx.x/site-packages/Genshiblah.egg',
             'lib/pythonx.x/site-packages/txGenshi.egg',
-            'lib/pythonx.x/site-packages/Hypy.egg',
             'lib/pythonx.x/site-packages/Twisted.egg',
             'lib/pythonx.x/site-packages/Nevow.egg',
             'lib/pythonx.x/site-packages/Distribute.egg',

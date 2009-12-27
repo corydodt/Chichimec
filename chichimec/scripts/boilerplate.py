@@ -26,7 +26,6 @@ EASY_INSTALLABLE = index2Tuples("""
     genshi      Genshi
     storm       storm
     fudge       fudge
-    hypy        Hypy
     pyflakes    pyflakes
     txgenshi    txGenshi
     twisted     Twisted
@@ -37,7 +36,7 @@ MISC_PACKAGES = index2Tuples("""
     jquery      jQuery
     """)
 
-EXCLUDEABLE_PACKAGES = 'fudge genshi storm fudge hypy pyflakes jquery'.split()
+EXCLUDEABLE_PACKAGES = 'fudge genshi storm fudge pyflakes jquery'.split()
 
 
 class Options(usage.Options):
