@@ -71,7 +71,6 @@ class BoilerplateTest(unittest.TestCase):
         self.assertNoFiles(['TestProject_/' + x for x in
             ['testproject/test/__init__.py',
              'testproject/test/test_testproject.py',
-             'testproject/static/css/testproject.css',
              '.hgignore',
              'lib/python*/site-packages/pyflakes*.egg',
              'lib/python*/site-packages/fudge*egg',

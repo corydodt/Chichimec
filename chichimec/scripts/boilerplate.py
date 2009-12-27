@@ -38,12 +38,12 @@ MISC_PACKAGES = index2Tuples("""
     jquery      jQuery
     """)
 
-EXCLUDEABLE_PACKAGES = 'fudge genshi storm fudge pyflakes jquery'.split()
+EXCLUDEABLE_PACKAGES = 'txgenshi genshi storm fudge pyflakes jquery'.split()
 
 
 class Options(usage.Options):
     """
-    Create 
+    Create a shell of files for starting a web app
     """
     synopsis = "boilerplate [options] PROJECT"
     optFlags = [ ["best-practices", None, 
@@ -57,7 +57,12 @@ class Options(usage.Options):
         for k in EXCLUDEABLE_PACKAGES:
             v = EASY_INSTALLABLE.get(k, MISC_PACKAGES.get(k, None))
             optFlags.append(['no-%s' % (k,), None, 'Do not include %s' % (v,)])
+
         usage.Options.__init__(self, *a, **kw)
+
+        # by default, exclude fudge and pyflakes
+        for k in ('fudge', 'pyflakes'):
+            self['no-'+k] = True
 
     def parseArgs(self, project):
         self['projectDir'] = project
@@ -68,31 +73,40 @@ class Options(usage.Options):
 
         # write python files
         pys = bs.genPython(self)
-        for fn in pys:
+        def save(fn):
+            realFN = fn.format(options=self)
             try:
-                os.makedirs(os.path.dirname(fn))
+                os.makedirs(os.path.dirname(realFN))
             except OSError, e:
                 if e.errno != 17:
                     raise
-            open(fn, 'w').write(pys[fn])
+            open(realFN, 'w').write(pys[fn])
+
+        save('{options[projectDir]}/{options[projectName]}/__init__.py')
+        save('{options[projectDir]}/twisted/plugins/{options[projectName]}.py')
+        save('{options[projectDir]}/nevow/plugins/{options[projectName]}.py')
+
+        if self['best-practices']:
+            save('{options[projectDir]}/{options[projectName]}/test/__init__.py')
+            save('{options[projectDir]}/{options[projectName]}/test/test_{options[projectName]}.py')
 
         os.makedirs('%s/%s/static' % (self['projectDir'], self['projectName']))
         os.makedirs('%s/%s/static/css' % (self['projectDir'], self['projectName']))
         os.makedirs('%s/%s/templates' % (self['projectDir'], self['projectName']))
 
         # write jquery, maybe
-        if not self['no-jquery']:
+        if self['best-practices'] or not self['no-jquery']:
             shutil.copyfile(bs.YOURPROJECT('yourproject/static/jquery-1.3.2.js'),
-                ('{options[projectDir]}/{options[projectName]}/static/jquery-1.3.2.js'
-                ).format(options=self))
+                ('{o[projectDir]}/{o[projectName]}/static/jquery-1.3.2.js'
+                ).format(o=self))
             shutil.copyfile(bs.YOURPROJECT('yourproject/static/yourproject.js'),
-                ('{options[projectDir]}/{options[projectName]}/static/{options[projectName]}.js'
-                ).format(options=self))
+                ('{o[projectDir]}/{o[projectName]}/static/{o[projectName]}.js'
+                ).format(o=self))
 
         # write css
         shutil.copyfile(bs.YOURPROJECT('yourproject/static/css/yourproject.css'),
-            ('{options[projectDir]}/{options[projectName]}/static/css/{options[projectName]}.css'
-            ).format(options=self))
+            ('{o[projectDir]}/{o[projectName]}/static/css/{o[projectName]}.css'
+            ).format(o=self))
 
         # write xml template
         xmltpl = bs.genTemplateXML(self)
@@ -101,23 +115,39 @@ class Options(usage.Options):
                 ).format(o=self)
         open(xmltplFile, 'w').write(xmltpl)
 
-        ps = []
         # figure out what scripts we're including
-        for k in EASY_INSTALLABLE:
-            ps.append("'%s'," % (EASY_INSTALLABLE[k],))
-        self['optionalScripts'] = '\n'.join(ps)
+        # when best-practices is turned on, include everything
+        ps = []
+        if not self['best-practices']:
+            for k in EASY_INSTALLABLE:
+                if not self.get('no-'+k, False):
+                    ps.append("'%s'," % (EASY_INSTALLABLE[k],))
+        else:
+            for k in EASY_INSTALLABLE:
+                ps.append("'%s'," % (EASY_INSTALLABLE[k],))
+        self['selectedDependencies'] = '\n'.join(ps)
 
+        # write .hgignore when best-practices.
+        if self['best-practices']:
+            shutil.copyfile(bs.YOURPROJECT('.hgignore'),
+                ('{o[projectDir]}/.hgignore').format(o=self))
+
+        # write bootstrap file
         bstxt = bs.genBootstrap(self)
         bsFile = '%s/bootstrap.py' % (self['projectDir'],)
         open(bsFile, 'w').write(bstxt)
         os.chmod(bsFile, 0o755)
 
+        # run the bootstrap file
         proc = subprocess.Popen([bsFile, self['projectDir']],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 )
         stdout = proc.communicate()[0]
         assert proc.returncode == 0, stdout
+
+        # save the output of running bootstrap in case we need to diagnose
+        # later
         self['virtualenvOutput'] = '\n'.join(['> ' + x for x in
             stdout.splitlines()])
 

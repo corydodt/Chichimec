@@ -33,7 +33,7 @@ def genBootstrap(options):
         setupCode = "{genSetup}"
         open('{options[projectDir]}/setup.py', 'w').write(setupCode)
         def after_install(options, home_dir):
-            args = [join(home_dir, 'bin', 'easy_install'), {developmentMode} '{options[projectDir]}', {options[optionalScripts]}]
+            args = [join(home_dir, 'bin', 'easy_install'), {developmentMode} '{options[projectDir]}', {options[selectedDependencies]}]
             subprocess.call(args)
         def adjust_options(options, args):
             options.distribute = True
@@ -70,14 +70,13 @@ def genPython(options):
             YOURPROJECT('yourproject/__init__.py'), options)
     r['{options[projectDir]}/{options[projectName]}/test/__init__.py'] = formatFile(
             YOURPROJECT('yourproject/test/__init__.py'), options)
+    r['{options[projectDir]}/{options[projectName]}/test/test_{options[projectName]}.py'] = formatFile(
+            YOURPROJECT('yourproject/test/test_yourproject.py'), options)
     r['{options[projectDir]}/twisted/plugins/{options[projectName]}.py'] = formatFile(
             YOURPROJECT('twisted/plugins/yourproject.py'), options)
     r['{options[projectDir]}/nevow/plugins/{options[projectName]}.py'] = formatFile(
             YOURPROJECT('nevow/plugins/yourproject.py'), options)
-    r2 = {}
-    for k in r:
-        r2[k.format(options=options)] = r[k]
-    return r2
+    return r
 
 
 def genTemplateXML(options):

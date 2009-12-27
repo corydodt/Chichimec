@@ -24,10 +24,19 @@ setup(name='{options[projectDir]}',
           'Nevow',
           'Chichimec',
           'virtualenv',
-{options[optionalScripts]}
+{options[selectedDependencies]}
           ],
 
       package_data={{
+          '{options[projectName]}': [ 'sql/*.sql', 
+              'templates/*',
+              'static/*.css',
+              'static/*.js',
+              'static/*.gif',
+              'static/*.png',
+              'static/*.jpg',
+              'static/{options[projectDir]}/*.js',
+              ],
         }},
       classifiers=[
           'Development Status :: 2 - Pre-Alpha',
