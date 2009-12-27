@@ -30,7 +30,8 @@ EASY_INSTALLABLE = index2Tuples("""
     pyflakes    pyflakes
     txgenshi    txGenshi
     twisted     Twisted
-    nevow       Nevow 
+    nevow       Nevow
+    virtualenv  virtualenv
     """)
 
 MISC_PACKAGES = index2Tuples("""

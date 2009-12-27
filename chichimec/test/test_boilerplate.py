@@ -2,6 +2,7 @@
 Tests for the creation of boilerplates
 """
 import os
+import glob
 
 from twisted.trial import unittest
 
@@ -25,29 +26,24 @@ class BoilerplateTest(unittest.TestCase):
         Check that each arg filename DOES NOT EXIST in the current directory.
         """
         for f in files:
-            if os.path.exists(f):
+            if glob.glob(f) != []:
                 if messageFn:
                     msg = messageFn(f)
                     self.assertTrue(False, msg)
                 else:
-                    self.assertTrue(False, "%s could not be opened" % (f,))
+                    self.assertTrue(False, "%s should not have existed" % (f,))
 
     def assertFiles(self, files, messageFn=None):
         """
         Check that each arg filename exists in the current directory.
         """
         for f in files:
-            if os.path.isdir(f):
-                continue 
-            else:
-                try:
-                    open(f)
-                except EnvironmentError:
-                    if messageFn:
-                        msg = messageFn(f)
-                        self.assertTrue(False, msg)
-                    else:
-                        self.assertTrue(False, "%s could not be opened" % (f,))
+            if len(glob.glob(f)) == 0:
+                if messageFn:
+                    msg = messageFn(f)
+                    self.assertTrue(False, msg)
+                else:
+                    self.assertTrue(False, "%s could not be opened" % (f,))
 
     def test_newProject(self):
         """
@@ -68,8 +64,8 @@ class BoilerplateTest(unittest.TestCase):
             'lib/python*/site-packages/txGenshi*.egg',
             'lib/python*/site-packages/Twisted*.egg',
             'lib/python*/site-packages/Nevow*.egg',
-            'lib/python*/site-packages/Distribute*.egg',
-            'lib/python*/site-packages/Virtualenv*.egg',
+            'lib/python*/site-packages/distribute*.egg',
+            'lib/python*/site-packages/virtualenv*.egg',
             ]], messageFn)
 
         self.assertNoFiles(['TestProject_/' + x for x in
