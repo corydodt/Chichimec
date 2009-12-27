@@ -20,6 +20,18 @@ class BoilerplateTest(unittest.TestCase):
         o.parseOptions(*args)
         return o
 
+    def assertNoFiles(self, files, messageFn=None):
+        """
+        Check that each arg filename DOES NOT EXIST in the current directory.
+        """
+        for f in files:
+            if os.path.exists(f):
+                if messageFn:
+                    msg = messageFn(f)
+                    self.assertTrue(False, msg)
+                else:
+                    self.assertTrue(False, "%s could not be opened" % (f,))
+
     def assertFiles(self, files, messageFn=None):
         """
         Check that each arg filename exists in the current directory.
@@ -49,15 +61,25 @@ class BoilerplateTest(unittest.TestCase):
             'twisted/plugins/testproject.py',
             'testproject/static/testproject.js',
             'testproject/static/jquery-1.3.2.js',
-            'testproject/templates/',
-            'lib/pythonx.x/site-packages/Chichimec.egg',
-            'lib/pythonx.x/site-packages/Genshiblah.egg',
-            'lib/pythonx.x/site-packages/txGenshi.egg',
-            'lib/pythonx.x/site-packages/Twisted.egg',
-            'lib/pythonx.x/site-packages/Nevow.egg',
-            'lib/pythonx.x/site-packages/Distribute.egg',
-            'lib/pythonx.x/site-packages/Virtualenv.egg',
+            'testproject/static/css/testproject.css',
+            'testproject/templates/testproject.xhtml',
+            'lib/python*/site-packages/Chichimec*.egg',
+            'lib/python*/site-packages/Genshi*.egg',
+            'lib/python*/site-packages/txGenshi*.egg',
+            'lib/python*/site-packages/Twisted*.egg',
+            'lib/python*/site-packages/Nevow*.egg',
+            'lib/python*/site-packages/Distribute*.egg',
+            'lib/python*/site-packages/Virtualenv*.egg',
             ]], messageFn)
+
+        self.assertNoFiles(['TestProject_/' + x for x in
+            ['testproject/test/__init__.py',
+             'testproject/test/test_testproject.py',
+             'testproject/static/css/testproject.css',
+             '.hgignore',
+             'lib/python*/site-packages/pyflakes*.egg',
+             'lib/python*/site-packages/fudge*egg',
+             ]])
 
     def test_cherryPick(self):
         """
@@ -77,6 +99,7 @@ class BoilerplateTest(unittest.TestCase):
         messageFn = lambda x: "%s could not be opened; %s" % (x, outp)
         self.assertFiles(['TestProject___/' + x for x in ['bin/activate',
             '.hgignore', 'testproject/test/test_testproject.py',
-            'lib/pythonx.x/site-packages/pyflakes.egg',
-            'lib/pythonx.x/site-packages/fudge.egg',
+            'testproject/test/__init__.py',
+            'lib/python*/site-packages/pyflakes*.egg',
+            'lib/python*/site-packages/fudge*egg',
             ]], messageFn)

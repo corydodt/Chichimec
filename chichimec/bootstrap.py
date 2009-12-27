@@ -82,3 +82,11 @@ def genPython(options):
     for k in r:
         r2[k.format(options=options)] = r[k]
     return r2
+
+
+def genTemplateXML(options):
+    """
+    Get the XML for the template file we include
+    """
+    return formatFile(YOURPROJECT('yourproject/templates/yourproject.xhtml'),
+            options)

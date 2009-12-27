@@ -3,13 +3,14 @@ Create the boilerplate for a new Chichimec-based web application
 """
 import sys
 import os
+import shutil
 from inspect import cleandoc
 import subprocess
 
 from twisted.python import usage
 
 from chichimec.util import nameFix
-from chichimec.bootstrap import genBootstrap, genPython
+from chichimec import bootstrap as bs
 
 def index2Tuples(s):
     """
@@ -65,7 +66,7 @@ class Options(usage.Options):
         os.mkdir(self['projectDir'])
 
         # write python files
-        pys = genPython(self)
+        pys = bs.genPython(self)
         for fn in pys:
             try:
                 os.makedirs(os.path.dirname(fn))
@@ -74,15 +75,40 @@ class Options(usage.Options):
                     raise
             open(fn, 'w').write(pys[fn])
 
+        os.makedirs('%s/%s/static' % (self['projectDir'], self['projectName']))
+        os.makedirs('%s/%s/static/css' % (self['projectDir'], self['projectName']))
+        os.makedirs('%s/%s/templates' % (self['projectDir'], self['projectName']))
+
+        # write jquery, maybe
+        if not self['no-jquery']:
+            shutil.copyfile(bs.YOURPROJECT('yourproject/static/jquery-1.3.2.js'),
+                ('{options[projectDir]}/{options[projectName]}/static/jquery-1.3.2.js'
+                ).format(options=self))
+            shutil.copyfile(bs.YOURPROJECT('yourproject/static/yourproject.js'),
+                ('{options[projectDir]}/{options[projectName]}/static/{options[projectName]}.js'
+                ).format(options=self))
+
+        # write css
+        shutil.copyfile(bs.YOURPROJECT('yourproject/static/css/yourproject.css'),
+            ('{options[projectDir]}/{options[projectName]}/static/css/{options[projectName]}.css'
+            ).format(options=self))
+
+        # write xml template
+        xmltpl = bs.genTemplateXML(self)
+        xmltplFile = (
+                '{o[projectDir]}/{o[projectName]}/templates/{o[projectName]}.xhtml'
+                ).format(o=self)
+        open(xmltplFile, 'w').write(xmltpl)
+
         ps = []
         # figure out what scripts we're including
         for k in EASY_INSTALLABLE:
             ps.append("'%s'," % (EASY_INSTALLABLE[k],))
         self['optionalScripts'] = '\n'.join(ps)
 
-        bs = genBootstrap(self)
+        bstxt = bs.genBootstrap(self)
         bsFile = '%s/bootstrap.py' % (self['projectDir'],)
-        open(bsFile, 'w').write(bs)
+        open(bsFile, 'w').write(bstxt)
         os.chmod(bsFile, 0o755)
 
         proc = subprocess.Popen([bsFile, self['projectDir']],
