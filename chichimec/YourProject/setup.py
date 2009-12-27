@@ -15,7 +15,7 @@ setup(name='{options[projectDir]}',
 
       packages=find_packages(),
 
-      scripts=['bin/activate','bin/redeploy'
+      scripts=['bin/activate',
           ],
 
       install_requires=[
@@ -23,7 +23,7 @@ setup(name='{options[projectDir]}',
           'Twisted>=9.0.0',
           'Nevow',
           'Chichimec',
-          {options[optionalScripts]}
+{options[optionalScripts]}
           ],
 
       package_data={{
