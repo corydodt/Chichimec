@@ -80,10 +80,34 @@ class BoilerplateTest(unittest.TestCase):
         """
         You can exclude bits of a deployment with --no-*
         """
-        self.assertTrue(False)
-        self.runBoilerplate(['--no-genshi', 'TestProject__', ])
+        self.runBoilerplate(['--no-genshi', '--no-txgenshi', 'TestProject__', ])
+        self.assertFiles(['TestProject__/testproject/__init__.py'])
+        self.assertNoFiles(['TestProject__/lib/python*/site-packages/txGenshi*.egg',
+                'TestProject__/lib/python*/site-packages/Genshi*.egg',
+                ])
 
-    test_cherryPick.todo = "todo"
+    def test_selectDependencies(self):
+        def doTest(options, expected):
+            o = boilerplate.Options()
+            o.postOptions = lambda: None
+            o.parseOptions(options)
+            o.selectDependencies()
+            self.assertEqual(
+                    sorted(o['selectedDependenciesNames']),
+                    expected)
+
+        doTest(["Dummy"], 
+            ['Genshi', 'Nevow', 'Twisted', 'storm', 'txGenshi', 'virtualenv'])
+        doTest(['--best-practices', 'Dummy', ],
+            ['Genshi', 'Nevow', 'Twisted', 'fudge', 'pyflakes', 'storm',
+                'txGenshi', 'virtualenv'])
+        doTest(['--no-txgenshi', 'Dummy', ],
+            ['Genshi', 'Nevow', 'Twisted', 'storm',  'virtualenv'])
+        doTest(['--no-storm', '--no-txgenshi', 'Dummy', ],
+            ['Genshi', 'Nevow', 'Twisted',  'virtualenv'])
+        doTest(['--best-practices', '--no-txgenshi', 'Dummy', ],
+            ['Genshi', 'Nevow', 'Twisted', 'fudge', 'pyflakes', 'storm',
+                'txGenshi', 'virtualenv'])
 
     def test_bestPractices(self):
         """

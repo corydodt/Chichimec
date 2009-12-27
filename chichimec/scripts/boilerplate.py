@@ -68,6 +68,25 @@ class Options(usage.Options):
         self['projectDir'] = project
         self['projectName'] = nameFix(project)
 
+    def selectDependencies(self):
+        """
+        Set self['selectedDependencies'] based on rules and command-line flags
+        """
+        # when best-practices is turned on, include everything
+        ps = []
+        ps2 = []
+        if self['best-practices']:
+            for k in EASY_INSTALLABLE:
+                ps.append("'%s'," % (EASY_INSTALLABLE[k],))
+                ps2.append(EASY_INSTALLABLE[k])
+        else:
+            for k in EASY_INSTALLABLE:
+                if not self.get('no-'+k, False):
+                    ps.append("'%s'," % (EASY_INSTALLABLE[k],))
+                    ps2.append(EASY_INSTALLABLE[k])
+        self['selectedDependencies'] = '\n'.join(ps)
+        self['selectedDependenciesNames'] = ps2
+
     def postOptions(self):
         os.mkdir(self['projectDir'])
 
@@ -116,16 +135,7 @@ class Options(usage.Options):
         open(xmltplFile, 'w').write(xmltpl)
 
         # figure out what scripts we're including
-        # when best-practices is turned on, include everything
-        ps = []
-        if not self['best-practices']:
-            for k in EASY_INSTALLABLE:
-                if not self.get('no-'+k, False):
-                    ps.append("'%s'," % (EASY_INSTALLABLE[k],))
-        else:
-            for k in EASY_INSTALLABLE:
-                ps.append("'%s'," % (EASY_INSTALLABLE[k],))
-        self['selectedDependencies'] = '\n'.join(ps)
+        self.selectDependencies()
 
         # write .hgignore when best-practices.
         if self['best-practices']:
