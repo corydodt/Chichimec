@@ -96,15 +96,20 @@ class BoilerplateTest(unittest.TestCase):
                     sorted(o['selectedDependenciesNames']),
                     expected)
 
+        # default packages
         doTest(["Dummy"], 
             ['Genshi', 'Nevow', 'Twisted', 'storm', 'txGenshi', 'virtualenv'])
+        # all packages
         doTest(['--best-practices', 'Dummy', ],
             ['Genshi', 'Nevow', 'Twisted', 'fudge', 'pyflakes', 'storm',
                 'txGenshi', 'virtualenv'])
+        # simple exclusion
         doTest(['--no-txgenshi', 'Dummy', ],
             ['Genshi', 'Nevow', 'Twisted', 'storm',  'virtualenv'])
+        # multiple exclusion
         doTest(['--no-storm', '--no-txgenshi', 'Dummy', ],
             ['Genshi', 'Nevow', 'Twisted',  'virtualenv'])
+        # --best-practices overrides --no-foo exclusions 
         doTest(['--best-practices', '--no-txgenshi', 'Dummy', ],
             ['Genshi', 'Nevow', 'Twisted', 'fudge', 'pyflakes', 'storm',
                 'txGenshi', 'virtualenv'])
