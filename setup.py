@@ -21,6 +21,7 @@ setup(name='Chichimec',
           'Distribute>=0.6.10',
           'twisted>=9.0.0',
           'fudge',
+          'virtualenv>=1.4.3',
           ],
 
       package_data={
