@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+cwd=`dirname $0`
+
+source $cwd/bin/activate
+
+trial {options[projectName]}

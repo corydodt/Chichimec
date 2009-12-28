@@ -41,6 +41,13 @@ def genBootstrap(options):
     return output
 
 
+def genRunTests(options):
+    """
+    Get the runtests script as a string
+    """
+    return formatFile(YOURPROJECT('runtests'), options)
+
+
 def genREADME(options):
     """
     Get the README file as a string

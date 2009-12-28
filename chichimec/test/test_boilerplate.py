@@ -4,6 +4,7 @@ Tests for the creation of boilerplates
 import sys
 import io
 import glob
+import subprocess
 
 from twisted.trial import unittest
 
@@ -125,13 +126,25 @@ class BoilerplateTest(unittest.TestCase):
         outp = o['virtualenvOutput']
         messageFn = lambda x: "%s could not be opened; %s" % (x, outp)
         self.assertFiles(['TestProject___/' + x for x in ['bin/activate',
-            '.hgignore', 'testproject/test/test_testproject.py',
+            '.hgignore', 
+            'runtests',
+            'testproject/test/test_testproject.py',
             'testproject/test/__init__.py',
             'lib/python*/site-packages/pyflakes*.egg',
             'lib/python*/site-packages/fudge*egg',
             ]], messageFn)
 
+    def test_generated(self):
+        """
+        Run the tests we generated in the boilerplate!
+        """
+        o = self.runBoilerplate(['--best-practices', 'TestProject____', ])
+        subprocess.check_call('TestProject____/runtests')
+
 class RunTest(unittest.TestCase):
+    """
+    The run function works
+    """
     def test_run(self):
         sys.stderr = io.BytesIO()
         sys.stdout = io.BytesIO()

@@ -144,6 +144,12 @@ class Options(usage.Options):
         readme = bs.genREADME(self)
         open(self['projectDir'] + '/README', 'w').write(readme)
 
+        # write runtests when best-practices
+        runtests = bs.genRunTests(self)
+        runtestsFN = self['projectDir'] + '/runtests'
+        open(runtestsFN, 'w').write(runtests)
+        os.chmod(runtestsFN, 0o755)
+
         # write .hgignore when best-practices.
         if self['best-practices']:
             shutil.copyfile(bs.YOURPROJECT('.hgignore'),
