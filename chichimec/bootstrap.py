@@ -2,7 +2,6 @@
 Tool for building bootstrap scripts for applications.
 """
 import os
-from string import Template
 from inspect import cleandoc
 
 import virtualenv
