@@ -32,11 +32,8 @@ def genBootstrap(options):
         setupCode = "{genSetup}"
         open('{options[projectDir]}/setup.py', 'w').write(setupCode)
         def after_install(options, home_dir):
-            args = [join(home_dir, 'bin', 'easy_install'), {developmentMode} '{options[projectDir]}', {options[selectedDependencies]}]
+            args = [join(home_dir, 'bin', 'easy_install'), {developmentMode} {options[selectedDependencies]}]
             subprocess.call(args)
-        def adjust_options(options, args):
-            options.distribute = True
-            setattr(options, 'no-site-packages', True)
         """).format(options=options, genSetup=setup,
                 developmentMode=dev)
 

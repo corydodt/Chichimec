@@ -6,6 +6,7 @@ import os
 import shutil
 from inspect import cleandoc
 import subprocess
+import glob
 
 from twisted.python import usage
 
@@ -24,6 +25,7 @@ def index2Tuples(s):
     return r
 
 EASY_INSTALLABLE = index2Tuples("""
+    chichimec   Chichimec
     genshi      Genshi
     storm       storm
     fudge       fudge
@@ -38,7 +40,7 @@ MISC_PACKAGES = index2Tuples("""
     jquery      jQuery
     """)
 
-EXCLUDEABLE_PACKAGES = 'txgenshi genshi storm fudge pyflakes jquery'.split()
+EXCLUDEABLE_PACKAGES = 'txgenshi genshi storm pyflakes jquery'.split()
 
 
 class Options(usage.Options):
@@ -60,8 +62,8 @@ class Options(usage.Options):
 
         usage.Options.__init__(self, *a, **kw)
 
-        # by default, exclude fudge and pyflakes
-        for k in ('fudge', 'pyflakes'):
+        # by default, exclude pyflakes
+        for k in ('pyflakes',):
             self['no-'+k] = True
 
     def parseArgs(self, project):
@@ -147,6 +149,12 @@ class Options(usage.Options):
             shutil.copyfile(bs.YOURPROJECT('.hgignore'),
                 ('{o[projectDir]}/.hgignore').format(o=self))
 
+        # copy the distribute tarball when it's handy.  This speeds up env
+        # creation.
+        distributeTarball = glob.glob('distribute-*.tar.gz')
+        if distributeTarball:
+            shutil.copyfile(distributeTarball[0], self['projectDir'])
+
         # write bootstrap file
         bstxt = bs.genBootstrap(self)
         bsFile = '%s/bootstrap.py' % (self['projectDir'],)
@@ -154,7 +162,7 @@ class Options(usage.Options):
         os.chmod(bsFile, 0o755)
 
         # run the bootstrap file
-        proc = subprocess.Popen([bsFile, self['projectDir']],
+        proc = subprocess.Popen([bsFile, '--distribute', '--no-site-packages', self['projectDir']],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 )

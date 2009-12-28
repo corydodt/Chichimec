@@ -3,7 +3,6 @@ Tests for the creation of boilerplates
 """
 import sys
 import io
-import os
 import glob
 
 from twisted.trial import unittest
@@ -78,7 +77,6 @@ class BoilerplateTest(unittest.TestCase):
              'testproject/test/test_testproject.py',
              '.hgignore',
              'lib/python*/site-packages/pyflakes*.egg',
-             'lib/python*/site-packages/fudge*egg',
              ]])
 
     def test_cherryPick(self):
@@ -103,20 +101,20 @@ class BoilerplateTest(unittest.TestCase):
 
         # default packages
         doTest(["Dummy"], 
-            ['Genshi', 'Nevow', 'Twisted', 'storm', 'txGenshi', 'virtualenv'])
+            ['Chichimec', 'Genshi', 'Nevow', 'Twisted', 'fudge', 'storm', 'txGenshi', 'virtualenv'])
         # all packages
         doTest(['--best-practices', 'Dummy', ],
-            ['Genshi', 'Nevow', 'Twisted', 'fudge', 'pyflakes', 'storm',
+            ['Chichimec', 'Genshi', 'Nevow', 'Twisted', 'fudge', 'pyflakes', 'storm',
                 'txGenshi', 'virtualenv'])
         # simple exclusion
         doTest(['--no-txgenshi', 'Dummy', ],
-            ['Genshi', 'Nevow', 'Twisted', 'storm',  'virtualenv'])
+            ['Chichimec', 'Genshi', 'Nevow', 'Twisted', 'fudge', 'storm',  'virtualenv'])
         # multiple exclusion
         doTest(['--no-storm', '--no-txgenshi', 'Dummy', ],
-            ['Genshi', 'Nevow', 'Twisted',  'virtualenv'])
+            ['Chichimec', 'Genshi', 'Nevow', 'Twisted',  'fudge', 'virtualenv'])
         # --best-practices overrides --no-foo exclusions 
         doTest(['--best-practices', '--no-txgenshi', 'Dummy', ],
-            ['Genshi', 'Nevow', 'Twisted', 'fudge', 'pyflakes', 'storm',
+            ['Chichimec', 'Genshi', 'Nevow', 'Twisted', 'fudge', 'pyflakes', 'storm',
                 'txGenshi', 'virtualenv'])
 
     def test_bestPractices(self):
@@ -142,3 +140,4 @@ class RunTest(unittest.TestCase):
         finally:
             sys.stderr = sys.__stderr__
             sys.stdout = sys.__stdout__
+
