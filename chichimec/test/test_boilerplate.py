@@ -1,6 +1,8 @@
 """
 Tests for the creation of boilerplates
 """
+import sys
+import io
 import os
 import glob
 
@@ -130,3 +132,13 @@ class BoilerplateTest(unittest.TestCase):
             'lib/python*/site-packages/pyflakes*.egg',
             'lib/python*/site-packages/fudge*egg',
             ]], messageFn)
+
+class RunTest(unittest.TestCase):
+    def test_run(self):
+        sys.stderr = io.BytesIO()
+        sys.stdout = io.BytesIO()
+        try:
+            self.assertRaises(SystemExit, boilerplate.run, ['boilerplate', '--help'])
+        finally:
+            sys.stderr = sys.__stderr__
+            sys.stdout = sys.__stdout__

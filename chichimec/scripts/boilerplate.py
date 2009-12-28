@@ -98,10 +98,11 @@ class Options(usage.Options):
                 os.makedirs(os.path.dirname(realFN))
             except OSError, e:
                 if e.errno != 17:
-                    raise
+                    raise # pragma: no cover
             open(realFN, 'w').write(pys[fn])
 
         save('{options[projectDir]}/{options[projectName]}/__init__.py')
+        save('{options[projectDir]}/{options[projectName]}/resource.py')
         save('{options[projectDir]}/twisted/plugins/{options[projectName]}.py')
         save('{options[projectDir]}/nevow/plugins/{options[projectName]}.py')
 

@@ -68,6 +68,8 @@ def genPython(options):
     r = {}
     r['{options[projectDir]}/{options[projectName]}/__init__.py'] = formatFile(
             YOURPROJECT('yourproject/__init__.py'), options)
+    r['{options[projectDir]}/{options[projectName]}/resource.py'] = formatFile(
+            YOURPROJECT('yourproject/resource.py'), options)
     r['{options[projectDir]}/{options[projectName]}/test/__init__.py'] = formatFile(
             YOURPROJECT('yourproject/test/__init__.py'), options)
     r['{options[projectDir]}/{options[projectName]}/test/test_{options[projectName]}.py'] = formatFile(

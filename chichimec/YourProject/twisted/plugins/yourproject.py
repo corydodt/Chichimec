@@ -33,7 +33,7 @@ class {options[projectDir]}ServerMaker(object):
         """
         Construct the service
         """
-        from {options[projectName]}.webserver import WebSite
+        from chichimec.webserver import WebSite
         site = WebSite()
         ws = TCPServer(int(options['port']), site)
         ws.site = site
