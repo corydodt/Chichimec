@@ -34,7 +34,9 @@ class {options[projectDir]}ServerMaker(object):
         Construct the service
         """
         from chichimec.webserver import WebSite
+        from {options[projectName]}.resource import Root
         site = WebSite()
+        site.resource = Root()
         ws = TCPServer(int(options['port']), site)
         ws.site = site
         return ws

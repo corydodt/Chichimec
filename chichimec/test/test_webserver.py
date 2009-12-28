@@ -20,14 +20,10 @@ class WebsiteTest(unittest.TestCase):
             self.messages.append([a, sorted(kw.items()),
                 ])
 
-        MyRoot = fudge.Fake('MyRoot', callable=True).returns(fudge.Fake('Resource'))
-        self.restore1 = fudge.patch_object(resource.RootFactory, 'rootClass', MyRoot)
         self.restore2 = fudge.patch_object(log, 'msg', msg)
 
     def tearDown(self):
         self.restore2.restore()
-        self.restore1.restore()
-        self.Root = None
         del self.messages[:]
 
     def test_logging(self):

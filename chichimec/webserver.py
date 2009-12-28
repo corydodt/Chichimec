@@ -5,13 +5,14 @@ from twisted.python import log
 
 from nevow import appserver
 
-from chichimec.resource import RootFactory
+from chichimec.resource import DefaultResource
 
 class WebSite(appserver.NevowSite):
     """Website with <80 column logging"""
+    rootClass = DefaultResource
+
     def __init__(self, *a, **kw):
-        fac = RootFactory()
-        root = fac.createRoot()
+        root = self.rootClass()
         appserver.NevowSite.__init__(self, root, *a, **kw)
 
     def log(self, request):
