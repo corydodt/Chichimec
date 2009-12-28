@@ -2,9 +2,9 @@
 HTTP-accessible Resources for {options[projectDir]}
 """
 
-from nevow import athena
+from nevow import athena, loaders, static, url
 
-from chichimec.resource import DefaultRoot
+from chichimec.resource import DefaultResource
 
 from {options[projectName]} import RESOURCE
 
@@ -14,7 +14,7 @@ class {options[projectDir]}Page(athena.LivePage):
     addSlash = True
 
 
-class Root(DefaultRoot):
+class Root(DefaultResource):
     """
     Adds child nodes for things common to anonymous and logged-in root
     resources:
@@ -35,6 +35,4 @@ class Root(DefaultRoot):
 
     def renderHTTP(self, ctx):
         return url.root.child("app")
-
-Root.setAsRoot()
 

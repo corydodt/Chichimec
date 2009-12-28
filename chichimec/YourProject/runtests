@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-cwd=`dirname $0`
+ENV=`dirname $0`
+cd $ENV
 
-source $cwd/bin/activate
+source bin/activate
 
 trial {options[projectName]}
