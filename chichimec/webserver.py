@@ -1,17 +1,18 @@
 """
 The boilerplate behind the resources.  Start services and stuff like that.
 """
-from twisted.application import internet
 from twisted.python import log
 
 from nevow import appserver
 
-from .resource import Root
+from chichimec.resource import RootFactory
 
 class WebSite(appserver.NevowSite):
     """Website with <80 column logging"""
     def __init__(self, *a, **kw):
-        appserver.NevowSite.__init__(self, Root(), *a, **kw)
+        fac = RootFactory()
+        root = fac.createRoot()
+        appserver.NevowSite.__init__(self, root, *a, **kw)
 
     def log(self, request):
         uri = request.uri
