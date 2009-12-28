@@ -137,6 +137,10 @@ class Options(usage.Options):
         # figure out what scripts we're including
         self.selectDependencies()
 
+        # write README
+        readme = bs.genREADME(self)
+        open(self['projectDir'] + '/README', 'w').write(readme)
+
         # write .hgignore when best-practices.
         if self['best-practices']:
             shutil.copyfile(bs.YOURPROJECT('.hgignore'),

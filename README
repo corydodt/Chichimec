@@ -83,9 +83,8 @@ different ways to use boilerplate::
     boilerplate --no-genshi --no-storm MyLeanProject
 
     # create a fresh project obeying all recommended best practices for
-    # project layout.  This gives you a setup.py, a virtualenv
-    # bootstrap-generator script, a test directory complete with a failing
-    # test, and all dependencies.
+    # project layout.  This gives you a test directory complete with a failing
+    # test, and all dependencies including test materials.
     boilerplate --best-practices MyHardcoreProject
 
 Now you have an application.  You can even run it, by doing::
@@ -103,6 +102,8 @@ Once you have an application, you can write code.
 
 The Root resource is in myproject.resource.  It uses templates found in
 myproject/templates/.
+
+Examples can be found by navigating the localhost:8080 website.
 
 
 Future Directions

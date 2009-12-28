@@ -53,7 +53,10 @@ class BoilerplateTest(unittest.TestCase):
         outp = o['virtualenvOutput']
         messageFn = lambda x: "%s could not be opened; %s" % (x, outp)
         self.assertFiles(['TestProject_/' + x for x in ['bin/activate',
-            'testproject/__init__.py', 'nevow/plugins/testproject.py',
+            'testproject/__init__.py', 
+            'testproject/resource.py', 
+            'README',
+            'nevow/plugins/testproject.py',
             'twisted/plugins/testproject.py',
             'testproject/static/testproject.js',
             'testproject/static/jquery-1.3.2.js',
