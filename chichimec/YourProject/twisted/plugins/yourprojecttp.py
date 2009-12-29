@@ -12,7 +12,7 @@ from twisted.application.service import IServiceMaker
 from twisted.application.internet import TCPServer
 
 class Options(usage.Options):
-    optParameters = [['port', 'p', '7000', 'Port to run on'],
+    optParameters = [['port', 'p', 7000, 'Port to run on'],
                      ]
 
 
