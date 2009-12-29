@@ -28,6 +28,7 @@ class {options[projectDir]}ServerMaker(object):
     tapname = "{options[projectName]}"
     description = "YOU SHOULD FILL IN A DESCRIPTION"
     options = Options
+    serverClass = TCPServer
 
     def makeService(self, options):
         """
@@ -37,7 +38,7 @@ class {options[projectDir]}ServerMaker(object):
         from {options[projectName]}.resource import Root
         site = WebSite()
         site.resource = Root()
-        ws = TCPServer(int(options['port']), site)
+        ws = self.serverClass(int(options['port']), site)
         ws.site = site
         return ws
 

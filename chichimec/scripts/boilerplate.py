@@ -105,12 +105,13 @@ class Options(usage.Options):
 
         save('{options[projectDir]}/{options[projectName]}/__init__.py')
         save('{options[projectDir]}/{options[projectName]}/resource.py')
-        save('{options[projectDir]}/twisted/plugins/{options[projectName]}.py')
-        save('{options[projectDir]}/nevow/plugins/{options[projectName]}.py')
+        save('{options[projectDir]}/twisted/plugins/{options[projectName]}tp.py')
+        save('{options[projectDir]}/nevow/plugins/{options[projectName]}np.py')
 
         if self['best-practices']:
             save('{options[projectDir]}/{options[projectName]}/test/__init__.py')
             save('{options[projectDir]}/{options[projectName]}/test/test_{options[projectName]}.py')
+            save('{options[projectDir]}/{options[projectName]}/test/test_twistdplugin.py')
 
         os.makedirs('%s/%s/static' % (self['projectDir'], self['projectName']))
         os.makedirs('%s/%s/static/css' % (self['projectDir'], self['projectName']))

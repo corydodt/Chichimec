@@ -58,8 +58,8 @@ class BoilerplateTest(unittest.TestCase):
             'testproject/__init__.py', 
             'testproject/resource.py', 
             'README',
-            'nevow/plugins/testproject.py',
-            'twisted/plugins/testproject.py',
+            'nevow/plugins/testprojectnp.py',
+            'twisted/plugins/testprojecttp.py',
             'testproject/static/testproject.js',
             'testproject/static/jquery-1.3.2.js',
             'testproject/static/css/testproject.css',
@@ -140,6 +140,7 @@ class BoilerplateTest(unittest.TestCase):
         """
         o = self.runBoilerplate(['--best-practices', 'TestProject____', ])
         subprocess.check_call('TestProject____/runtests')
+
 
 class RunTest(unittest.TestCase):
     """

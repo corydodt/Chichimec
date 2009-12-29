@@ -75,12 +75,14 @@ def genPython(options):
             YOURPROJECT('yourproject/resource.py'), options)
     r['{options[projectDir]}/{options[projectName]}/test/__init__.py'] = formatFile(
             YOURPROJECT('yourproject/test/__init__.py'), options)
+    r['{options[projectDir]}/{options[projectName]}/test/test_twistdplugin.py'] = formatFile(
+            YOURPROJECT('yourproject/test/test_twistdplugin.py'), options)
     r['{options[projectDir]}/{options[projectName]}/test/test_{options[projectName]}.py'] = formatFile(
             YOURPROJECT('yourproject/test/test_yourproject.py'), options)
-    r['{options[projectDir]}/twisted/plugins/{options[projectName]}.py'] = formatFile(
-            YOURPROJECT('twisted/plugins/yourproject.py'), options)
-    r['{options[projectDir]}/nevow/plugins/{options[projectName]}.py'] = formatFile(
-            YOURPROJECT('nevow/plugins/yourproject.py'), options)
+    r['{options[projectDir]}/twisted/plugins/{options[projectName]}tp.py'] = formatFile(
+            YOURPROJECT('twisted/plugins/yourprojecttp.py'), options)
+    r['{options[projectDir]}/nevow/plugins/{options[projectName]}np.py'] = formatFile(
+            YOURPROJECT('nevow/plugins/yourprojectnp.py'), options)
     return r
 
 
