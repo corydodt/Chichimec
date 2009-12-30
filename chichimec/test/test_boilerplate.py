@@ -58,6 +58,7 @@ class BoilerplateTest(unittest.TestCase):
             'testproject/__init__.py', 
             'testproject/resource.py', 
             'README',
+            'cycle',
             'nevow/plugins/testprojectnp.py',
             'twisted/plugins/testprojecttp.py',
             'testproject/static/TestProject_/__init__.js',
