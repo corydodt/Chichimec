@@ -22,7 +22,7 @@ class TwistdTest(unittest.TestCase):
             if plugin.tapname == '{options[projectName]}':
                 break
         else:
-            self.failTest('Could not find the plugin {options[projectName]}')
+            self.fail('Could not find the plugin {options[projectName]}')
 
         self.assertEqual(plugin.tapname, '{options[projectName]}')
 
