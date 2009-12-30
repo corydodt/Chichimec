@@ -8,87 +8,76 @@ import virtualenv
 
 from chichimec.util import RESOURCE
 
-YOURPROJECT = lambda s: RESOURCE('YourProject/' + s)
-
-def genSetup(options):
-    """
-    Generate a setup script as a string
-    """
-    input = open(YOURPROJECT('setup.py')).read()
-    return input.format(options=options)
-
-
 def genBootstrap(options):
     """
     Get the bootstrap file as a string
     """
-    setup = genSetup(options).encode('string-escape')
-
     devDir = os.path.abspath(RESOURCE('../dist'))
     dev = '"-HNone", "-f{devDir}",'.format(devDir=devDir) if options['develop'] else ''
 
     tpl = cleandoc("""
-        import os, subprocess
-        setupCode = "{genSetup}"
-        open('{options[projectDir]}/setup.py', 'w').write(setupCode)
+        import subprocess
         def after_install(options, home_dir):
             args = [join(home_dir, 'bin', 'easy_install'), {developmentMode} {options[selectedDependencies]}]
             subprocess.call(args)
-        """).format(options=options, genSetup=setup,
+        """).format(options=options, 
                 developmentMode=dev)
 
     output = virtualenv.create_bootstrap_script(tpl)
     return output
 
 
-def genRunTests(options):
+def parseFlags(f):
     """
-    Get the runtests script as a string
+    Extract flags from a flag-string
     """
-    return formatFile(YOURPROJECT('runtests'), options)
-
-
-def genREADME(options):
-    """
-    Get the README file as a string
-    """
-    return formatFile(YOURPROJECT('README'), options)
-
-
-def formatFile(file, options, **kw):
-    """
-    Open and read file and emit a string of its contents, formatted using
-    options as an argument, and other kw as specified
-    """
-    input = open(file).read()
-    return input.format(options=options, **kw)
-
-
-def genPython(options):
-    """
-    Get all the python modules to be generated as a dictionary of strings
-    """
+    vals = f.split(',')
     r = {}
-    r['{options[projectDir]}/{options[projectName]}/__init__.py'] = formatFile(
-            YOURPROJECT('yourproject/__init__.py'), options)
-    r['{options[projectDir]}/{options[projectName]}/resource.py'] = formatFile(
-            YOURPROJECT('yourproject/resource.py'), options)
-    r['{options[projectDir]}/{options[projectName]}/test/__init__.py'] = formatFile(
-            YOURPROJECT('yourproject/test/__init__.py'), options)
-    r['{options[projectDir]}/{options[projectName]}/test/test_twistdplugin.py'] = formatFile(
-            YOURPROJECT('yourproject/test/test_twistdplugin.py'), options)
-    r['{options[projectDir]}/{options[projectName]}/test/test_{options[projectName]}.py'] = formatFile(
-            YOURPROJECT('yourproject/test/test_yourproject.py'), options)
-    r['{options[projectDir]}/twisted/plugins/{options[projectName]}tp.py'] = formatFile(
-            YOURPROJECT('twisted/plugins/yourprojecttp.py'), options)
-    r['{options[projectDir]}/nevow/plugins/{options[projectName]}np.py'] = formatFile(
-            YOURPROJECT('nevow/plugins/yourprojectnp.py'), options)
+    for val in vals:
+        if val == '~':
+            continue
+        elif '=' in f:
+            k, v = val.split('=', 1)
+            r[k] = v
+        else:
+            r[val] = True
     return r
 
 
-def genTemplateXML(options):
+def generate(options):
     """
-    Get the XML for the template file we include
+    Take our mini-language for copying files and produce the files, flags and
+    data that need to be copied into the boilerplated dir
     """
-    return formatFile(YOURPROJECT('yourproject/templates/yourproject.xhtml'),
-            options)
+    for line in generatedFiles.splitlines():
+        line = line.strip()
+        if line:
+            source, target, flags = line.split()
+            if flags:
+                flags = parseFlags(flags)
+            data = open(RESOURCE(source)).read()
+            if not flags.get('no-format'):
+                data = data.format(options=options)
+            filename = target.format(options=options)
+            yield flags, filename, data
+
+
+generatedFiles = ( # {{{
+"""
+YourProject/setup.py    {options[projectDir]}/setup.py  ~
+YourProject/yourproject/__init__.py {options[projectDir]}/{options[projectName]}/__init__.py    ~
+YourProject/yourproject/resource.py {options[projectDir]}/{options[projectName]}/resource.py    ~
+YourProject/twisted/plugins/yourprojecttp.py {options[projectDir]}/twisted/plugins/{options[projectName]}tp.py  ~
+YourProject/nevow/plugins/yourprojectnp.py {options[projectDir]}/nevow/plugins/{options[projectName]}np.py  ~
+YourProject/yourproject/test/__init__.py {options[projectDir]}/{options[projectName]}/test/__init__.py  best-practices
+YourProject/yourproject/test/test_yourproject.py {options[projectDir]}/{options[projectName]}/test/test_{options[projectName]}.py  best-practices
+YourProject/yourproject/test/test_twistdplugin.py {options[projectDir]}/{options[projectName]}/test/test_twistdplugin.py   best-practices
+YourProject/yourproject/test/test_nevowplugin.py {options[projectDir]}/{options[projectName]}/test/test_nevowplugin.py best-practices
+YourProject/yourproject/static/jquery-1.3.2.js {options[projectDir]}/{options[projectName]}/static/jquery-1.3.2.js jquery,no-format
+YourProject/yourproject/static/yourproject.js {options[projectDir]}/{options[projectName]}/static/{options[projectName]}.js jquery,no-format
+YourProject/yourproject/static/css/yourproject.css  {options[projectDir]}/{options[projectName]}/static/css/{options[projectName]}.css  ~
+YourProject/yourproject/templates/yourproject.xhtml {options[projectDir]}/{options[projectName]}/templates/{options[projectName]}.xhtml ~
+YourProject/README      {options[projectDir]}/README    ~
+YourProject/runtests    {options[projectDir]}/runtests  mode=0o755
+YourProject/.hgignore   {options[projectDir]}/.hgignore best-practices
+""") # }}}

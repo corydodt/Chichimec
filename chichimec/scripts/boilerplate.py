@@ -90,71 +90,27 @@ class Options(usage.Options):
         self['selectedDependenciesNames'] = ps2
 
     def postOptions(self):
-        os.mkdir(self['projectDir'])
-
-        # write python files
-        pys = bs.genPython(self)
-        def save(fn):
-            realFN = fn.format(options=self)
-            try:
-                os.makedirs(os.path.dirname(realFN))
-            except OSError, e:
-                if e.errno != 17:
-                    raise # pragma: no cover
-            open(realFN, 'w').write(pys[fn])
-
-        save('{options[projectDir]}/{options[projectName]}/__init__.py')
-        save('{options[projectDir]}/{options[projectName]}/resource.py')
-        save('{options[projectDir]}/twisted/plugins/{options[projectName]}tp.py')
-        save('{options[projectDir]}/nevow/plugins/{options[projectName]}np.py')
-
-        if self['best-practices']:
-            save('{options[projectDir]}/{options[projectName]}/test/__init__.py')
-            save('{options[projectDir]}/{options[projectName]}/test/test_{options[projectName]}.py')
-            save('{options[projectDir]}/{options[projectName]}/test/test_twistdplugin.py')
-
-        os.makedirs('%s/%s/static' % (self['projectDir'], self['projectName']))
-        os.makedirs('%s/%s/static/css' % (self['projectDir'], self['projectName']))
-        os.makedirs('%s/%s/templates' % (self['projectDir'], self['projectName']))
-
-        # write jquery, maybe
-        if self['best-practices'] or not self['no-jquery']:
-            shutil.copyfile(bs.YOURPROJECT('yourproject/static/jquery-1.3.2.js'),
-                ('{o[projectDir]}/{o[projectName]}/static/jquery-1.3.2.js'
-                ).format(o=self))
-            shutil.copyfile(bs.YOURPROJECT('yourproject/static/yourproject.js'),
-                ('{o[projectDir]}/{o[projectName]}/static/{o[projectName]}.js'
-                ).format(o=self))
-
-        # write css
-        shutil.copyfile(bs.YOURPROJECT('yourproject/static/css/yourproject.css'),
-            ('{o[projectDir]}/{o[projectName]}/static/css/{o[projectName]}.css'
-            ).format(o=self))
-
-        # write xml template
-        xmltpl = bs.genTemplateXML(self)
-        xmltplFile = (
-                '{o[projectDir]}/{o[projectName]}/templates/{o[projectName]}.xhtml'
-                ).format(o=self)
-        open(xmltplFile, 'w').write(xmltpl)
-
         # figure out what scripts we're including
         self.selectDependencies()
 
-        # write README
-        readme = bs.genREADME(self)
-        open(self['projectDir'] + '/README', 'w').write(readme)
+        # write python files
+        def save(fn, data):
+            try:
+                os.makedirs(os.path.dirname(fn))
+            except OSError, e:
+                if e.errno != 17:
+                    raise # pragma: no cover
+            open(fn, 'w').write(data)
 
-        # write runtests when best-practices
-        runtests = bs.genRunTests(self)
-        runtestsFN = self['projectDir'] + '/runtests'
-        open(runtestsFN, 'w').write(runtests)
-        os.chmod(runtestsFN, 0o755)
+        for flags, filename, data in bs.generate(self):
+            if flags.get('jquery') and self['no-jquery']:
+                continue
+            if flags.get('best-practices') and not self['best-practices']:
+                continue
 
-        # write .hgignore when best-practices.
-        if self['best-practices']:
-            shutil.copyfile(bs.YOURPROJECT('.hgignore'),
-                ('{o[projectDir]}/.hgignore').format(o=self))
+            save(filename, data)
+            if flags.get('mode'):
+                os.chmod(filename, int(flags['mode'], 8))
 
         # copy the distribute tarball when it's handy.  This speeds up env
         # creation.
