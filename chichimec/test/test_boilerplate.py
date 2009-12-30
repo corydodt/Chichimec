@@ -60,7 +60,7 @@ class BoilerplateTest(unittest.TestCase):
             'README',
             'nevow/plugins/testprojectnp.py',
             'twisted/plugins/testprojecttp.py',
-            'testproject/static/testproject.js',
+            'testproject/static/TestProject_/__init__.js',
             'testproject/static/jquery-1.3.2.js',
             'testproject/static/css/testproject.css',
             'testproject/templates/testproject.xhtml',

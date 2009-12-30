@@ -74,7 +74,7 @@ YourProject/yourproject/test/test_yourproject.py {options[projectDir]}/{options[
 YourProject/yourproject/test/test_twistdplugin.py {options[projectDir]}/{options[projectName]}/test/test_twistdplugin.py   best-practices
 YourProject/yourproject/test/test_nevowplugin.py {options[projectDir]}/{options[projectName]}/test/test_nevowplugin.py best-practices
 YourProject/yourproject/static/jquery-1.3.2.js {options[projectDir]}/{options[projectName]}/static/jquery-1.3.2.js jquery,no-format
-YourProject/yourproject/static/yourproject.js {options[projectDir]}/{options[projectName]}/static/{options[projectName]}.js jquery,no-format
+YourProject/yourproject/static/YourProject/__init__.js {options[projectDir]}/{options[projectName]}/static/{options[projectDir]}/__init__.js jquery,no-format
 YourProject/yourproject/static/css/yourproject.css  {options[projectDir]}/{options[projectName]}/static/css/{options[projectName]}.css  ~
 YourProject/yourproject/templates/yourproject.xhtml {options[projectDir]}/{options[projectName]}/templates/{options[projectName]}.xhtml ~
 YourProject/README      {options[projectDir]}/README    ~
