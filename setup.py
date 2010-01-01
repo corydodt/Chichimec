@@ -19,9 +19,12 @@ setup(name='Chichimec',
 
       install_requires=[
           'Distribute>=0.6.10',
-          'twisted>=9.0.0',
+          'Twisted>=9.0.0',
+          'Nevow',
           'fudge',
           'virtualenv>=1.4.3',
+          'txGenshi>=0.0.2-cdd1',
+          'Genshi',
           ],
 
       package_data={
