@@ -7,14 +7,14 @@ creator: Cory Dodt <corymercurial@spam.goonmill.org>
 reporter: Cory Dodt <corymercurial@spam.goonmill.org>
 
 
-severity: wishlist
+severity: critical
 
 
 status: open
 
 
-summary: jsbridge to run javascript tests
+summary: make sure txgenshi and athena work together
 
 
-time: Fri, 01 Jan 2010 06:56:19 +0000
+time: Fri, 01 Jan 2010 12:33:46 +0000
 

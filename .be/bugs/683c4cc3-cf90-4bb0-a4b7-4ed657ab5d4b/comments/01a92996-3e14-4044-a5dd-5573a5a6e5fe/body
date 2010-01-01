@@ -1,0 +1,3 @@
+While setting up tests I observed that, when I accidentally used a genshifile
+loader on the athena page, I got AttributeError on AthenaPage.page.  Real bug?
+
