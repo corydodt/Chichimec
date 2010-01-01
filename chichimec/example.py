@@ -5,6 +5,7 @@ from datetime import datetime
 import random
 
 from twisted.internet import task
+from twisted.python import log
 
 from nevow import athena, rend, loaders
 
@@ -80,7 +81,9 @@ class RandomNumber(athena.LiveElement):
         self.filter = num
         if not self.running:
             self.running = self.task.start(0.2)
-        return 'ok'
+        msg = u"Recording new filter: numbers that end with %s" % (num,)
+        log.msg(msg)
+        return msg
 
     def number(self):
         """
@@ -89,6 +92,7 @@ class RandomNumber(athena.LiveElement):
         r = int(random.random() * 1000000)
         if str(r).endswith(str(self.filter)):
             d = self.callRemote('number', r)
+            log.msg("Recording new matching number %s" % (r,))
 
     def __init__(self, *a, **kw):
         self.task = task.LoopingCall(self.number)

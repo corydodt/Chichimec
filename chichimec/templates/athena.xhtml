@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+    Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:n="http://nevow.com/ns/nevow/0.1" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Athena Example</title>
+    <n:invisible n:render="liveglue"></n:invisible>
+  </head>
+  <body>
+    <h1>Athena Demo</h1>
+    <p>As a demonstration of athena, this widget uses AJAX to talk to the
+    server and comet to receive streaming server messages.</p>
+
+    <p>In this case, the server is generating random numbers every 200ms.
+    Each time one of those numbers matches the filter (ends with the same
+    digits), the number will be displayed below.</p>
+
+    <p>You can change the filter by editing the input box.</p>
+
+    <div n:render="random"></div>
+
+    <p><a href="/">Home</a></p>
+  </body>
+</html>

@@ -5,7 +5,9 @@ except ImportError:
     from distribute_setup import use_setuptools
     use_setuptools()
 
-from setuptools import setup, find_packages
+from setuptools import setup
+# cannot use find_packages, because nevow.plugins is not found (it lacks
+# __init__.py on purpose)
 setup(name='Chichimec',
       version='0.1.0',
       author='Cory Dodt',
@@ -13,7 +15,9 @@ setup(name='Chichimec',
       url='http://goonmill.org/chichimec/',
       download_url='http://chichimec-source.goonmill.org/archive/tip.tar.gz',
 
-      packages=find_packages(),
+      packages=['chichimec', 'chichimec.test', 'chichimec.scripts',
+          'nevow.plugins',
+          ],
 
       scripts=['bin/boilerplate',],
 

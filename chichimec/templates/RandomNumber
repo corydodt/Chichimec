@@ -1,0 +1,6 @@
+<div xmlns:n='http://nevow.com/ns/nevow/0.1' n:render="liveElement">
+    Last number seen: <strong></strong>
+    <form name="setFilter">
+      <input type="text" name="number"></input>
+    </form>
+</div>
