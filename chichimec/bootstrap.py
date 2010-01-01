@@ -85,4 +85,5 @@ runtests                                    runtests                            
 yourproject/test/__init__.py                {options[projectName]}/test/__init__.py                          best-practices
 yourproject/test/test_twistdplugin.py       {options[projectName]}/test/test_twistdplugin.py                 best-practices
 yourproject/test/test_nevowplugin.py        {options[projectName]}/test/test_nevowplugin.py                  best-practices
+yourproject/test/test_resource.py           {options[projectName]}/test/test_resource.py                     best-practices
 """) # }}}
