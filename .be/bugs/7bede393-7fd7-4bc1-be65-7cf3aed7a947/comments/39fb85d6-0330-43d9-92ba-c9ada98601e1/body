@@ -1,0 +1,12 @@
+I want the /app page to be a "Congratulations, it's working!" page which
+contains two links to examples:
+
+/app/txgenshi is an example showing off genshi templates
+/app/athena is an example showing off athena interactions
+
+Both of these will be resources defined inside chichimec proper, imported by
+the generated application, but the pages should contain direct file: links for
+examining the source code.
+
+There should be unit tests for this code.
+
