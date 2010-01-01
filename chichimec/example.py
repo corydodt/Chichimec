@@ -44,17 +44,17 @@ class GenshiMixPage(rend.Page):
         return self.username
 
 
-class AthenaPage(rend.Page):
+class AthenaPage(athena.LivePage):
     """
     Example page with athena demo
     """
-    docFactory = genshifile(RESOURCE('templates/athena.xhtml'))
+    docFactory = loaders.xmlfile(RESOURCE('templates/athena.xhtml'))
 
     def render_random(self, ctx, data):
         """
         The demo widget
         """
-        wid = MyWidget()
+        wid = RandomNumber()
         wid.setFragmentParent(self)
         return ctx.tag[wid]
 
@@ -64,7 +64,7 @@ class RandomNumber(athena.LiveElement):
     particular pattern, send it to the client.
     """
     running = None
-    jsClass = 'Chichimec.RandomNumber'
+    jsClass = u'Chichimec.RandomNumber'
     docFactory = loaders.xmlfile(RESOURCE('templates/RandomNumber'))
 
     @athena.expose
