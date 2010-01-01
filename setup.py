@@ -28,8 +28,10 @@ setup(name='Chichimec',
           ],
 
       package_data={
-          'chichimec': ['data/data.data',
-              ],
+          'chichimec': ['templates/genshimix.xhtml',
+                        'templates/athena.xhtml',
+                        'templates/RandomNumber',
+                        'static/Chichimec/__init__.js'],
         },
       classifiers=[
           'Development Status :: 2 - Pre-Alpha',
