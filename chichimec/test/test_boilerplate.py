@@ -83,10 +83,9 @@ class BoilerplateTest(unittest.TestCase):
         """
         You can exclude bits of a deployment with --no-*
         """
-        self.runBoilerplate(['--no-genshi', '--no-txgenshi', 'TestProject__', ])
+        self.runBoilerplate(['--no-storm', 'TestProject__', ])
         self.assertFiles(['TestProject__/testproject/__init__.py'])
-        self.assertNoFiles(['TestProject__/lib/python*/site-packages/txGenshi*.egg',
-                'TestProject__/lib/python*/site-packages/Genshi*.egg',
+        self.assertNoFiles(['TestProject__/lib/python*/site-packages/storm*.egg',
                 ])
 
     def test_selectDependencies(self):
@@ -107,13 +106,13 @@ class BoilerplateTest(unittest.TestCase):
             ['Chichimec', 'Genshi', 'Nevow', 'Twisted', 'fudge', 'pyflakes', 'storm',
                 'txGenshi', 'virtualenv'])
         # simple exclusion
-        doTest(['--no-txgenshi', 'Dummy', ],
-            ['Chichimec', 'Genshi', 'Nevow', 'Twisted', 'fudge', 'storm',  'virtualenv'])
+        doTest(['--no-storm', 'Dummy', ],
+            ['Chichimec', 'Genshi', 'Nevow', 'Twisted', 'fudge', 'txGenshi', 'virtualenv'])
         # multiple exclusion
-        doTest(['--no-storm', '--no-txgenshi', 'Dummy', ],
-            ['Chichimec', 'Genshi', 'Nevow', 'Twisted',  'fudge', 'virtualenv'])
+        doTest(['--no-storm', '--no-pyflakes', 'Dummy', ],
+            ['Chichimec', 'Genshi', 'Nevow', 'Twisted',  'fudge', 'txGenshi', 'virtualenv'])
         # --best-practices overrides --no-foo exclusions 
-        doTest(['--best-practices', '--no-txgenshi', 'Dummy', ],
+        doTest(['--best-practices', '--no-storm', 'Dummy', ],
             ['Chichimec', 'Genshi', 'Nevow', 'Twisted', 'fudge', 'pyflakes', 'storm',
                 'txGenshi', 'virtualenv'])
 

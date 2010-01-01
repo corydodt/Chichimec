@@ -40,7 +40,7 @@ MISC_PACKAGES = index2Tuples("""
     jquery      jQuery
     """)
 
-EXCLUDEABLE_PACKAGES = 'txgenshi genshi storm pyflakes jquery'.split()
+EXCLUDEABLE_PACKAGES = 'storm pyflakes jquery'.split()
 
 
 class Options(usage.Options):
