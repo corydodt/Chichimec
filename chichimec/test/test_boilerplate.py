@@ -58,7 +58,6 @@ class BoilerplateTest(unittest.TestCase):
             'testproject/__init__.py', 
             'testproject/resource.py', 
             'README',
-            'cycle',
             'nevow/plugins/testprojectnp.py',
             'twisted/plugins/testprojecttp.py',
             'testproject/static/TestProject_/__init__.js',
@@ -76,7 +75,6 @@ class BoilerplateTest(unittest.TestCase):
 
         self.assertNoFiles(['TestProject_/' + x for x in
             ['testproject/test/__init__.py',
-             'testproject/test/test_testproject.py',
              '.hgignore',
              'lib/python*/site-packages/pyflakes*.egg',
              ]])
@@ -129,7 +127,6 @@ class BoilerplateTest(unittest.TestCase):
         self.assertFiles(['TestProject___/' + x for x in ['bin/activate',
             '.hgignore', 
             'runtests',
-            'testproject/test/test_testproject.py',
             'testproject/test/__init__.py',
             'lib/python*/site-packages/pyflakes*.egg',
             'lib/python*/site-packages/fudge*egg',
