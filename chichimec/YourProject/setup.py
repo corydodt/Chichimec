@@ -23,7 +23,7 @@ setup(name='{options[projectDir]}',
           'Twisted>=9.0.0',
           'Nevow',
           'Chichimec',
-          'virtualenv',
+          'virtualenv>=1.4.3',
 {options[selectedDependencies]}
           ],
 
