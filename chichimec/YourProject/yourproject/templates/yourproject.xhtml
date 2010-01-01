@@ -1,15 +1,28 @@
-<html xmlns:n="http://nevow.com/ns/nevow/0.1"
-    xmlns:genshi="http://genshi.edgewall.org/"
-    xmlns:xi="http://www.w3.org/2001/XInclude">
-  <!-- vi:set ft=html: -->
+<html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Some HTML file</title>
     <link rel="stylesheet" type="text/css" href="/static/css/{options[projectName]}.css" />
   </head>
   <body>
-    <!-- stuff here -->
-    <script type="text/javascript" src="/static/jquery-1.3.2.js"></script>
-    <script type="text/javascript" src="/static/{options[projectName]}.js"></script>
+    <p>You have successfully created your Chichimec-based project:</p>
+    
+    <h1>{options[projectName]}</h1>
+    
+    <p>The following links contain examples you may be interested in.</p>
+
+    <ul>
+      <li><a href="genshimix">Page rendered by mixing Genshi templates with
+        Nevow templates</a></li>
+      <li><a href="athena">Page containing Athena widgets which interact with
+        the server via AJAX/Comet</a></li>
+    </ul>
+
+    <h2>Congratulations, it worked!</h2>
+
+    <p>Now that you know it works, you should modify this template and 
+    {options[projectName]}.resource.{options[projectDir]}Page to implement
+    <em>your</em> application.</p>
+
   </body>
 </html>

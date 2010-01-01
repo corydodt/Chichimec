@@ -5,6 +5,7 @@ HTTP-accessible Resources for {options[projectDir]}
 from nevow import athena, loaders, static, url
 
 from chichimec.resource import DefaultResource
+from chichimec.example import GenshiMixPage, AthenaPage
 
 from {options[projectName]} import RESOURCE
 
@@ -12,6 +13,12 @@ from {options[projectName]} import RESOURCE
 class {options[projectDir]}Page(athena.LivePage):
     docFactory = loaders.xmlfile(RESOURCE('templates/{options[projectName]}.xhtml'))
     addSlash = True
+
+    def child_genshimix(self, ctx):
+        return GenshiMixPage()
+
+    def child_athena(self, ctx):
+        return AthenaPage()
 
 
 class Root(DefaultResource):
