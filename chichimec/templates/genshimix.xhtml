@@ -13,7 +13,7 @@
         a { color: #aea; }
         .top { background-color: #363; color: #fff; padding-top: 0.5em; padding-bottom: 0.5em; }
 
-        code { backgroud-color: #ccc; }
+        .source { font-weight: bold; }
     </style>
 
     <div class="top">
@@ -21,7 +21,10 @@
     <p>You are <span nevow:render="username"/> and your stuff is here.</p>
     <ul>
     <li><a href="/">Home</a></li>
-    <li><code><a genshi:attrs='{"href":"file://"+sourceFile}'>Source</a></code></li>
+    <li class="source">Source:
+      <a href="http://chichimec-source.goonmill.org/file/tip/chichimec/example.py">Python</a>
+      <a href="http://chichimec-source.goonmill.org/file/tip/chichimec/templates/genshimix.xhtml">Template</a>
+    </li>
     </ul>
     </div>
     <div>

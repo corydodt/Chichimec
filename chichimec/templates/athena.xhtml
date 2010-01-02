@@ -6,7 +6,7 @@
     <title>Athena Example</title>
     <n:invisible n:render="liveglue"></n:invisible>
     <style>
-      code { backgroud-color: #ccc; }
+        .source { background-color: #ccc; }
     </style>
   </head>
   <body>
@@ -22,8 +22,10 @@
 
     <div n:render="random"></div>
 
-    <p n:render="source"><a><n:attr name='href'>file://<n:slot
-        name='sourceFile' /></n:attr>Source</a></p>
+    <li class="source">Source:
+      <a href="http://chichimec-source.goonmill.org/file/tip/chichimec/example.py">Python</a>
+      <a href="http://chichimec-source.goonmill.org/file/tip/chichimec/templates/athena.xhtml">Template</a>
+    </li>
 
     <p><a href="/">Home</a></p>
   </body>
