@@ -10,7 +10,7 @@ reporter: Cory Dodt <corymercurial@spam.goonmill.org>
 severity: minor
 
 
-status: open
+status: closed
 
 
 summary: add examples, with unit tests

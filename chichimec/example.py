@@ -4,7 +4,7 @@ Example page resources.  Boilerplate apps will import these.
 from datetime import datetime
 import random
 
-from twisted.internet import task
+from twisted.internet import task, defer
 from twisted.python import log
 
 from nevow import athena, rend, loaders
@@ -55,9 +55,10 @@ class AthenaPage(athena.LivePage):
         """
         The demo widget
         """
-        wid = RandomNumber()
+        self.wid = wid = RandomNumber(rate=50)
         wid.setFragmentParent(self)
         return ctx.tag[wid]
+
 
 class RandomNumber(athena.LiveElement):
     """
@@ -80,7 +81,7 @@ class RandomNumber(athena.LiveElement):
         """
         self.filter = num
         if not self.running:
-            self.running = self.task.start(0.2)
+            self.running = self.task.start(1.0 / self.rate, now=False)
         msg = u"Recording new filter: numbers that end with %s" % (num,)
         log.msg(msg)
         return msg
@@ -89,10 +90,19 @@ class RandomNumber(athena.LiveElement):
         """
         Generate a number
         """
-        r = int(random.random() * 1000000)
+        r = int(random.randint(100000, 999999))
         if str(r).endswith(str(self.filter)):
-            d = self.callRemote('number', r)
             log.msg("Recording new matching number %s" % (r,))
+            return self.callRemote('number', r).addCallback(lambda q: r)
+        else:
+            return defer.succeed(r)
 
-    def __init__(self, *a, **kw):
+    def __init__(self, rate, *a, **kw):
+        self.rate = rate
         self.task = task.LoopingCall(self.number)
+
+    def detached(self):
+        """
+        Clean up the looping call we created
+        """
+        self.task.stop()
