@@ -29,6 +29,7 @@ class GenshiMixPage(rend.Page):
         self.altItems = [ (x, {'class': evenOdd[x % 2]})
             for x in list(xrange(10))]
         self.username = u'Joe'
+        self.sourceFile = RESOURCE('example.py')
 
     def date(self):
         """
@@ -58,6 +59,10 @@ class AthenaPage(athena.LivePage):
         self.wid = wid = RandomNumber(rate=50)
         wid.setFragmentParent(self)
         return ctx.tag[wid]
+
+    def render_source(self, ctx, data):
+        ctx.tag.fillSlots('sourceFile', RESOURCE('example.py'))
+        return ctx.tag
 
 
 class RandomNumber(athena.LiveElement):

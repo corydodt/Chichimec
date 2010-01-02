@@ -5,6 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Athena Example</title>
     <n:invisible n:render="liveglue"></n:invisible>
+    <style>
+      code { backgroud-color: #ccc; }
+    </style>
   </head>
   <body>
     <h1>Athena Demo</h1>
@@ -18,6 +21,9 @@
     <p>You can change the filter by editing the input box.</p>
 
     <div n:render="random"></div>
+
+    <p n:render="source"><a><n:attr name='href'>file://<n:slot
+        name='sourceFile' /></n:attr>Source</a></p>
 
     <p><a href="/">Home</a></p>
   </body>

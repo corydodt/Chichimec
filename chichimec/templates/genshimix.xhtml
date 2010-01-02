@@ -12,6 +12,8 @@
         div, ul { padding-left: 1em; margin: 0}
         a { color: #aea; }
         .top { background-color: #363; color: #fff; padding-top: 0.5em; padding-bottom: 0.5em; }
+
+        code { backgroud-color: #ccc; }
     </style>
 
     <div class="top">
@@ -19,6 +21,7 @@
     <p>You are <span nevow:render="username"/> and your stuff is here.</p>
     <ul>
     <li><a href="/">Home</a></li>
+    <li><code><a genshi:attrs='{"href":"file://"+sourceFile}'>Source</a></code></li>
     </ul>
     </div>
     <div>
