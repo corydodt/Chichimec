@@ -50,7 +50,7 @@ class AthenaPage(athena.LivePage):
     """
     Example page with athena demo
     """
-    docFactory = loaders.xmlfile(RESOURCE('templates/athena.xhtml'))
+    docFactory = genshifile(RESOURCE('templates/athena.xhtml'))
 
     def render_random(self, ctx, data):
         """

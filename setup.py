@@ -27,7 +27,7 @@ setup(name='Chichimec',
           'Nevow',
           'fudge',
           'virtualenv>=1.4.3',
-          'txGenshi>=0.0.2-cdd1',
+          'txGenshi>=0.0.1.0cdd1',
           'Genshi',
           ],
 
