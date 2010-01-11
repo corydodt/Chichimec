@@ -3,6 +3,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>{options[projectDir]}</title>
     <link rel="stylesheet" type="text/css" href="/static/css/{options[projectName]}.css" />
+    <style>
+      .source {{ background-color: #ccc; }}
+    </style>
   </head>
   <body>
     <p>You have successfully created your Chichimec-based project:</p>
@@ -13,9 +16,20 @@
 
     <ul>
       <li><a href="genshimix">Page rendered by mixing Genshi templates with
-        Nevow templates</a></li>
+        Nevow templates</a>
+        <blockquote class="source">Source code for the above: 
+          <a href="http://chichimec-source.goonmill.org/file/tip/chichimec/example.py">Python</a>
+          <a href="http://chichimec-source.goonmill.org/file/tip/chichimec/templates/genshimix.xhtml">Template</a>
+        </blockquote>
+
+      </li>
       <li><a href="athena">Page containing Athena widgets which interact with
-        the server via AJAX/Comet</a></li>
+        the server via AJAX/Comet</a>
+        <blockquote class="source">Source code for the above: 
+          <a href="http://chichimec-source.goonmill.org/file/tip/chichimec/example.py">Python</a>
+          <a href="http://chichimec-source.goonmill.org/file/tip/chichimec/templates/athena.xhtml">Template</a>
+        </blockquote>
+      </li>
     </ul>
 
     <h2>Congratulations, it worked!</h2>

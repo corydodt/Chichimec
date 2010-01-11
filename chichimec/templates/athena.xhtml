@@ -5,27 +5,19 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Athena Example</title>
     <n:invisible n:render="liveglue"></n:invisible>
-    <style>
-        .source { background-color: #ccc; }
-    </style>
   </head>
   <body>
     <h1>Athena Demo</h1>
+    <p>The server is generating random numbers every 20ms.  Each time one of
+    those numbers matches the filter (ends with the same digits), the number
+    will be displayed below.</p>
+
     <p>As a demonstration of athena, this widget uses AJAX to talk to the
     server and comet to receive streaming server messages.</p>
-
-    <p>In this case, the server is generating random numbers every 20ms.
-    Each time one of those numbers matches the filter (ends with the same
-    digits), the number will be displayed below.</p>
 
     <p>You can change the filter by editing the input box.</p>
 
     <div n:render="random"></div>
-
-    <li class="source">Source:
-      <a href="http://chichimec-source.goonmill.org/file/tip/chichimec/example.py">Python</a>
-      <a href="http://chichimec-source.goonmill.org/file/tip/chichimec/templates/athena.xhtml">Template</a>
-    </li>
 
     <p><a href="/">Home</a></p>
   </body>
