@@ -10,7 +10,7 @@ reporter: Cory Dodt <corymercurial@spam.goonmill.org>
 severity: critical
 
 
-status: open
+status: closed
 
 
 summary: make sure txgenshi and athena work together
