@@ -3,4 +3,5 @@
     <form name="setFilter">
       <input type="text" name="number"></input>
     </form>
+    <p>Rate: ${rate}</p>
 </div>

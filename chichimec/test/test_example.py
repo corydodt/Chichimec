@@ -37,7 +37,8 @@ class ResourceTest(unittest.TestCase):
             jsPackages = athena.allJavascriptPackages()
             rr = example.AthenaPage(jsModules=athena.MappingResource(jsPackages))
             rr._becomeLive(url.URL('/app'))
-            yield flat.flatten(rr)
+            rendered = yield flat.flatten(rr)
+            self.assertSubstring('Rate: 50', rendered)
 
             # set the rate to be too infrequent to have any race possibilities
             # during this test

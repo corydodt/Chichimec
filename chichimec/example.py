@@ -41,7 +41,7 @@ class RandomNumber(athena.LiveElement):
     """
     running = None
     jsClass = u'Chichimec.RandomNumber'
-    docFactory = loaders.xmlfile(RESOURCE('templates/RandomNumber'))
+    docFactory = genshifile(RESOURCE('templates/RandomNumber'))
 
     @athena.expose
     def setFilter(self, num):
