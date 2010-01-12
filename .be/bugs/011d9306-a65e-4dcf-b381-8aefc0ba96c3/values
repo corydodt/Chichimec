@@ -10,7 +10,7 @@ reporter: Cory Dodt <corymercurial@spam.goonmill.org>
 severity: serious
 
 
-status: open
+status: closed
 
 
 summary: fork or patch txgenshi with tests and my debug print removal
