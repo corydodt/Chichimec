@@ -10,7 +10,7 @@ reporter: Cory Dodt <corymercurial@spam.goonmill.org>
 severity: wishlist
 
 
-status: open
+status: closed
 
 
 summary: jsbridge to run javascript tests
