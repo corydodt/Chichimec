@@ -1,7 +1,0 @@
-I don't think there's anything special that jsbridge will add.  Nevow's test
-framework is using a command-line javascript parser, coupled with a simulated
-DOM implemented in javascript.  There's also some neat stuff using subunit
-that makes it easy to spawn the js interpreter and get the test back.
-
-Don't do anything with jsbridge; try to follow the Nevow approach instead.
-

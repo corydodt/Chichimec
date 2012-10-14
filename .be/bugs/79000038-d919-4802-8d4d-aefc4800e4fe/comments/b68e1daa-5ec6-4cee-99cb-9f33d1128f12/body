@@ -1,7 +1,0 @@
-Basic tests for the code in chichimec/static/Chichimec/ are needed to
-demonstrate the test principles permitted by Chichimec.
-
-See nevow.test.test_javascript, and associated nevow/js/*/Test/*Test*.js
-
-These make subunit and testtools new dependencies of Chichimec, though.
-

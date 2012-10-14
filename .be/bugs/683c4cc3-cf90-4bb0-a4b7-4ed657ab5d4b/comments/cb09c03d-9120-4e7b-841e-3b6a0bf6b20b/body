@@ -1,3 +1,0 @@
-Fix committed for 502823 in txGenshi, I'll just need to experiment a bit with
-Elements in place of full pages - Genshi has some assumptions about what kind
-of output it's producing.
